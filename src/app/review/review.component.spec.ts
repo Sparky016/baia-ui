@@ -16,7 +16,7 @@ describe('ReviewComponent', () => {
           useValue: {
             snapshot: {
               paramMap: {
-                get: (key: string) => key === 'id' ? 'test-id' : null,
+                get: (key: string) => (key === 'id' ? 'test-id' : null),
               },
             },
           },

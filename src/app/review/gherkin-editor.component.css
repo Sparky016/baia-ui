@@ -1,0 +1,144 @@
+.gherkin-editor {
+  font-family: 'Courier New', Courier, monospace;
+  padding: 1rem;
+}
+
+.doc-header {
+  margin-bottom: 1rem;
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.feature {
+  margin-bottom: 2rem;
+  border-left: 3px solid #4a90d9;
+  padding-left: 1rem;
+}
+
+.feature-header,
+.scenario-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.gherkin-keyword {
+  font-weight: bold;
+  color: #2c5f8a;
+  min-width: 5rem;
+}
+
+.feature-name,
+.scenario-name,
+.step-text {
+  cursor: pointer;
+}
+
+.editable:hover {
+  background-color: #f0f7ff;
+  border-radius: 3px;
+  outline: 1px dashed #4a90d9;
+}
+
+.feature-description {
+  color: #555;
+  font-style: italic;
+  margin: 0.25rem 0 0.75rem 0;
+}
+
+.scenario {
+  margin-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.steps-list {
+  list-style: none;
+  padding: 0;
+  margin: 0.5rem 0 0 1.5rem;
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.2rem 0.4rem;
+  border-radius: 3px;
+}
+
+.step.has-conflict {
+  background-color: #fff8e1;
+  border-left: 3px solid #f5a623;
+}
+
+.step-keyword {
+  font-weight: bold;
+  color: #5a4fcf;
+  min-width: 3.5rem;
+}
+
+.conflict-indicator {
+  color: #e67e00;
+  font-size: 1rem;
+}
+
+.inline-edit-input {
+  border: 1px solid #4a90d9;
+  border-radius: 3px;
+  padding: 0.2rem 0.4rem;
+  font-family: inherit;
+  font-size: inherit;
+  flex: 1;
+}
+
+.step-edit-input {
+  min-width: 20rem;
+}
+
+.btn-confirm,
+.btn-cancel {
+  border: none;
+  border-radius: 3px;
+  padding: 0.2rem 0.5rem;
+  cursor: pointer;
+}
+
+.btn-confirm {
+  background-color: #27ae60;
+  color: white;
+}
+
+.btn-cancel {
+  background-color: #e74c3c;
+  color: white;
+}
+
+/* Provenance badges */
+.provenance-badge {
+  font-family: sans-serif;
+  font-size: 0.7rem;
+  padding: 0.1rem 0.4rem;
+  border-radius: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.provenance-ui {
+  background-color: #dbeafe;
+  color: #1d4ed8;
+}
+
+.provenance-code {
+  background-color: #dcfce7;
+  color: #15803d;
+}
+
+.provenance-merged {
+  background-color: #fef9c3;
+  color: #a16207;
+}
+
+.no-doc {
+  color: #888;
+  font-style: italic;
+}

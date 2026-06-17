@@ -1,0 +1,119 @@
+<div class="gherkin-editor">
+  @if (doc(); as currentDoc) {
+    <div class="doc-header">
+      <span class="generated-at">Generated: {{ currentDoc.generatedAt | date: 'medium' }}</span>
+    </div>
+
+    @for (feature of currentDoc.features; track trackByIndex($index, feature)) {
+      <section class="feature" data-testid="feature">
+        <div class="feature-header">
+          <span class="gherkin-keyword">Feature:</span>
+          @if (isEditingFeature($index)) {
+            <input
+              class="inline-edit-input"
+              [(ngModel)]="editValue"
+              (keyup.enter)="confirmEdit()"
+              (keyup.escape)="cancelEdit()"
+              data-testid="edit-input"
+              autofocus
+            />
+            <button class="btn-confirm" (click)="confirmEdit()" data-testid="btn-confirm">✓</button>
+            <button class="btn-cancel" (click)="cancelEdit()" data-testid="btn-cancel">✕</button>
+          } @else {
+            <span
+              class="feature-name editable"
+              (click)="startEditFeature($index, feature.name)"
+              data-testid="feature-name"
+              >{{ feature.name }}</span
+            >
+          }
+        </div>
+
+        @if (feature.description) {
+          <p class="feature-description">{{ feature.description }}</p>
+        }
+
+        @for (
+          scenario of feature.scenarios;
+          track trackByIndex($index, scenario);
+          let si = $index
+        ) {
+          <div class="scenario" data-testid="scenario">
+            <div class="scenario-header">
+              <span class="gherkin-keyword">Scenario:</span>
+              @if (isEditingScenario($index, si)) {
+                <input
+                  class="inline-edit-input"
+                  [(ngModel)]="editValue"
+                  (keyup.enter)="confirmEdit()"
+                  (keyup.escape)="cancelEdit()"
+                  data-testid="edit-input"
+                  autofocus
+                />
+                <button class="btn-confirm" (click)="confirmEdit()" data-testid="btn-confirm">
+                  ✓
+                </button>
+                <button class="btn-cancel" (click)="cancelEdit()" data-testid="btn-cancel">
+                  ✕
+                </button>
+              } @else {
+                <span
+                  class="scenario-name editable"
+                  (click)="startEditScenario($index, si, scenario.name)"
+                  data-testid="scenario-name"
+                  >{{ scenario.name }}</span
+                >
+              }
+            </div>
+
+            <ul class="steps-list">
+              @for (step of scenario.steps; track trackByIndex($index, step); let sti = $index) {
+                <li class="step" [class.has-conflict]="hasConflict(step)" data-testid="step">
+                  @if (hasConflict(step)) {
+                    <span
+                      class="conflict-indicator"
+                      data-testid="conflict-indicator"
+                      title="Merged from UI + Code sources"
+                      >⚠</span
+                    >
+                  }
+                  <span class="step-keyword">{{ step.keyword }}</span>
+                  @if (isEditingStep($index, si, sti)) {
+                    <input
+                      class="inline-edit-input step-edit-input"
+                      [(ngModel)]="editValue"
+                      (keyup.enter)="confirmEdit()"
+                      (keyup.escape)="cancelEdit()"
+                      data-testid="edit-input"
+                      autofocus
+                    />
+                    <button class="btn-confirm" (click)="confirmEdit()" data-testid="btn-confirm">
+                      ✓
+                    </button>
+                    <button class="btn-cancel" (click)="cancelEdit()" data-testid="btn-cancel">
+                      ✕
+                    </button>
+                  } @else {
+                    <span
+                      class="step-text editable"
+                      (click)="startEditStep($index, si, sti, step.text)"
+                      data-testid="step-text"
+                      >{{ step.text }}</span
+                    >
+                  }
+                  <span
+                    [class]="provenanceCssClass(step.provenance)"
+                    data-testid="provenance-badge"
+                    >{{ provenanceLabel(step.provenance) }}</span
+                  >
+                </li>
+              }
+            </ul>
+          </div>
+        }
+      </section>
+    }
+  } @else {
+    <p class="no-doc" data-testid="no-doc">No Gherkin document available.</p>
+  }
+</div>

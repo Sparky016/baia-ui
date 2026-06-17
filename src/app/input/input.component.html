@@ -1,2 +1,117 @@
-<h1>Input</h1>
-<p>Enter your details to start the analysis.</p>
+<section class="input-page">
+  <h1>Start BAIA Analysis</h1>
+  <p>
+    Provide the target URL, instructions, and repository details to begin the automated analysis.
+  </p>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+    <!-- Target URL -->
+    <div class="field-group">
+      <label for="targetUrl">Target URL <span aria-hidden="true">*</span></label>
+      <input
+        id="targetUrl"
+        type="url"
+        formControlName="targetUrl"
+        placeholder="https://example.com"
+        [attr.aria-invalid]="form.get('targetUrl')?.invalid && form.get('targetUrl')?.touched"
+        aria-describedby="targetUrl-error"
+      />
+      @if (hasError('targetUrl', 'required')) {
+        <span id="targetUrl-error" class="field-error" role="alert">Target URL is required.</span>
+      } @else if (targetUrlPatternError) {
+        <span id="targetUrl-error" class="field-error" role="alert"
+          >Please enter a valid URL starting with http:// or https://.</span
+        >
+      }
+    </div>
+
+    <!-- Behaviour Instructions -->
+    <div class="field-group">
+      <label for="instructions">Behaviour Instructions <span aria-hidden="true">*</span></label>
+      <textarea
+        id="instructions"
+        formControlName="instructions"
+        placeholder="Describe the UI behaviours to analyse in natural language. You can provide detailed, multi-line instructions."
+        rows="6"
+        [attr.aria-invalid]="form.get('instructions')?.invalid && form.get('instructions')?.touched"
+        aria-describedby="instructions-error"
+      ></textarea>
+      @if (hasError('instructions', 'required')) {
+        <span id="instructions-error" class="field-error" role="alert"
+          >Behaviour instructions are required.</span
+        >
+      }
+    </div>
+
+    <!-- Repository URL -->
+    <div class="field-group">
+      <label for="repoUrl">Repository URL <span aria-hidden="true">*</span></label>
+      <input
+        id="repoUrl"
+        type="url"
+        formControlName="repoUrl"
+        placeholder="https://github.com/org/repo"
+        [attr.aria-invalid]="form.get('repoUrl')?.invalid && form.get('repoUrl')?.touched"
+        aria-describedby="repoUrl-error"
+      />
+      @if (hasError('repoUrl', 'required')) {
+        <span id="repoUrl-error" class="field-error" role="alert">Repository URL is required.</span>
+      } @else if (repoUrlPatternError) {
+        <span id="repoUrl-error" class="field-error" role="alert"
+          >Please enter a valid repository URL starting with http:// or https://.</span
+        >
+      }
+    </div>
+
+    <!-- Repository Provider -->
+    <div class="field-group">
+      <label for="repoProvider">Repository Provider <span aria-hidden="true">*</span></label>
+      <select
+        id="repoProvider"
+        formControlName="repoProvider"
+        aria-describedby="repoProvider-error"
+      >
+        <option value="github">GitHub</option>
+        <option value="azure">Azure Repos</option>
+      </select>
+      @if (hasError('repoProvider', 'required')) {
+        <span id="repoProvider-error" class="field-error" role="alert"
+          >Repository provider is required.</span
+        >
+      }
+    </div>
+
+    <!-- Credentials Reference -->
+    <div class="field-group">
+      <label for="credentialsRef">Credentials Reference <span aria-hidden="true">*</span></label>
+      <input
+        id="credentialsRef"
+        type="text"
+        formControlName="credentialsRef"
+        placeholder="e.g. my-github-pat or vault:secret/baia/github"
+        [attr.aria-invalid]="
+          form.get('credentialsRef')?.invalid && form.get('credentialsRef')?.touched
+        "
+        aria-describedby="credentialsRef-error"
+      />
+      @if (hasError('credentialsRef', 'required')) {
+        <span id="credentialsRef-error" class="field-error" role="alert"
+          >Credentials reference is required.</span
+        >
+      }
+    </div>
+
+    <!-- Submit error -->
+    @if (submitError) {
+      <div class="submit-error" role="alert"><strong>Error:</strong> {{ submitError }}</div>
+    }
+
+    <button type="submit" [disabled]="isSubmitDisabled">
+      @if (submitting) {
+        Submitting&hellip;
+      } @else {
+        Start Analysis
+      }
+    </button>
+  </form>
+</section>
